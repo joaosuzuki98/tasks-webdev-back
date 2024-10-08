@@ -13,3 +13,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Task {
+  tas_id Int @id @default(autoincrement())
+  tas_name String @db.VarChar(255) @unique
+  tas_deadline DateTime
+  tas_created_at DateTime @default(now())
+  tas_updated_at DateTime @updatedAt
+  @@map("tasks")
+}
