@@ -28,7 +28,7 @@ const showManyTasks = async (req, res) => {
 }
 
 const showOneTask = async (req, res) => {
-    const taskName = req.params
+    const taskName = req.params.name
 
     try {
         const task = await prisma.task.findUnique({
@@ -43,12 +43,13 @@ const showOneTask = async (req, res) => {
 }
 
 const updateTask = async (req, res) => {
+    const taskName = req.params.name
     const { name, deadline } = req.body
 
     try {
         const task = await prisma.task.update({
             where: {
-                tas_name: name
+                tas_name: taskName
             },
             data: {
                 tas_name: name,
@@ -62,7 +63,7 @@ const updateTask = async (req, res) => {
 }
 
 const deleteTask = async (req, res) => {
-    const taskName = req.params
+    const taskName = req.params.name
 
     try {
         const task = await prisma.task.delete({
@@ -74,4 +75,12 @@ const deleteTask = async (req, res) => {
     } catch(err) {
         return res.status(400).json({error: err})
     }
+}
+
+module.exports = {
+    createTask,
+    showManyTasks,
+    showOneTask,
+    updateTask,
+    deleteTask
 }
