@@ -2,13 +2,13 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 const createTask = async (req, res) => {
-    const { name, deadline } = req.body
+    const { name, day } = req.body
 
     try {
         const task = await prisma.task.create({
             data: {
                 tas_name: name,
-                tas_deadline: deadline
+                tas_day: day
             }
         })
 
@@ -44,7 +44,7 @@ const showOneTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
     const taskName = req.params.name
-    const { name, deadline } = req.body
+    const { name, day } = req.body
 
     try {
         const task = await prisma.task.update({
@@ -53,7 +53,7 @@ const updateTask = async (req, res) => {
             },
             data: {
                 tas_name: name,
-                tas_deadline: deadline
+                tas_day: day
             }
         })
         return res.status(200).json(task)
