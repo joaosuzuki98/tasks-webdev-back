@@ -2,14 +2,14 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 const createTask = async (req, res) => {
-    const { name, day, status } = req.body
+    const { tas_name, tas_day, tas_status } = req.body
 
     try {
         const task = await prisma.task.create({
             data: {
-                tas_name: name,
-                tas_day: day,
-                tas_status: status
+                tas_name: tas_name,
+                tas_day: tas_day,
+                tas_status: tas_status
             }
         })
 
