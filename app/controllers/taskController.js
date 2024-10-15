@@ -15,6 +15,11 @@ const createTask = async (req, res) => {
 
         return res.status(200).json(task)
     } catch(err) {
+        if (err.code === 'P2002') {
+            return res.status(400).json({
+                error: `Task ${tas_name} already exists.`
+            })
+        }
         return res.status(400).json({error: err})
     }
 }
