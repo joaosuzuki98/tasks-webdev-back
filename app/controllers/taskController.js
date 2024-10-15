@@ -20,8 +20,21 @@ const createTask = async (req, res) => {
 }
 
 const showManyTasks = async (req, res) => {
+    const status = req.query.status
+
     try {
-        const tasks = await prisma.task.findMany()
+        let tasks
+        if (status !== undefined) {
+            const isActive = status === 'true'
+            tasks = await prisma.task.findMany({
+                where: {
+                    tas_status: isActive
+                }
+            })
+        } else {
+            tasks = await prisma.task.findMany()
+        }
+
         return res.status(200).json(tasks)
     } catch(err) {
         return res.status(500).json({error: err})
