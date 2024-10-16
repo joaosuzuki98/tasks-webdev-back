@@ -15,6 +15,11 @@ const createTask = async (req, res) => {
 
         return res.status(200).json(task)
     } catch(err) {
+        if (err.code === 'P2002') {
+            return res.status(400).json({
+                error: `Task ${tas_name} already exists.`
+            })
+        }
         return res.status(400).json({error: err})
     }
 }
@@ -58,7 +63,7 @@ const showOneTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
     const taskName = req.params.name
-    const { name, day } = req.body
+    const { tas_name, tas_day, tas_status } = req.body
 
     try {
         const task = await prisma.task.update({
@@ -66,8 +71,9 @@ const updateTask = async (req, res) => {
                 tas_name: taskName
             },
             data: {
-                tas_name: name,
-                tas_day: day
+                tas_name: tas_name,
+                tas_day: tas_day,
+                tas_status: tas_status
             }
         })
         return res.status(200).json(task)
